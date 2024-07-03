@@ -1,5 +1,6 @@
 import {cart, addToCart} from '../data/cart.js'; 
 import {products} from '../data/products.js'; 
+import { priceFormat } from './utils/money.js';
 
 const productsGridElement = document.querySelector('.js-products-grid');
 let productsGridHTML = '';
@@ -26,7 +27,7 @@ function generateProductGrid(){
                     </div>
     
                     <div class="product-price">
-                        $${(item.priceCents/100).toFixed(2)}
+                        $${priceFormat(item.priceCents)}
                     </div>
     
                     <div class="product-quantity-container">
