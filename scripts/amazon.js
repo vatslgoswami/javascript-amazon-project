@@ -63,10 +63,12 @@ function generateProductGrid(){
     productsGridElement.innerHTML = productsGridHTML;
 }
 generateProductGrid();
-
+console.log(cart)
 const addToCartButtonElements = document.querySelectorAll('.js-add-to-cart-button');
 const cartQuantityElement = document.querySelector('.js-cart-quantity')
 const addedMsgTimeoutIDs = {};
+
+updateCartHTML();
 
 function updateCartHTML(){
     let cartQuantity = 0;
@@ -90,5 +92,6 @@ addToCartButtonElements.forEach((button) => {
             addToCart(button);
             updateCartHTML();
             displayAddedMsg(button);
+            console.log(cart);
     });
 });
