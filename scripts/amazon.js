@@ -1,4 +1,5 @@
-import {cart} from '../data/cart.js'; 
+import {cart, addToCart} from '../data/cart.js'; 
+import {products} from '../data/products.js'; 
 
 const productsGridElement = document.querySelector('.js-products-grid');
 let productsGridHTML = '';
@@ -66,37 +67,27 @@ const addToCartButtonElements = document.querySelectorAll('.js-add-to-cart-butto
 const cartQuantityElement = document.querySelector('.js-cart-quantity')
 const addedMsgTimeoutIDs = {};
 
-addToCartButtonElements.forEach((button, index) => {
-    button.addEventListener('click', () => {
-            let currQuantitySelector = document.querySelector(`.js-quantity-selector-${button.dataset.productId}`)
-            let currAddValue = Number(currQuantitySelector.value);
-            let productFound = false;
-            cart.forEach((element) => {
-                if (element.id === button.dataset.productId) {
-                    element.quantity += currAddValue;
-                    productFound = true;
-                }
-            });
-            if (!productFound) {
-                cart.push({
-                    id: button.dataset.productId,
-                    quantity: currAddValue
-                });
-            }
+function updateCartHTML(){
+    let cartQuantity = 0;
+    cart.forEach(element => cartQuantity += element.quantity);
+    cartQuantityElement.innerHTML = cartQuantity;
+}
 
-            let cartQuantity = 0;
-            cart.forEach(element => cartQuantity += element.quantity);
-            cartQuantityElement.innerHTML = cartQuantity;
-            console.log(cart);
-            setTimeout(()=> currQuantitySelector.value = '1', 62.5);
-
-            let addedElement = document.querySelector(`.js-added-to-cart-${button.dataset.productId}`);
+function displayAddedMsg(button){
+    let addedElement = document.querySelector(`.js-added-to-cart-${button.dataset.productId}`);
             addedElement.classList.add('added-message-opacity');
             const previousTimeoutID = addedMsgTimeoutIDs[button.dataset.productId]
             if (previousTimeoutID){
                 clearTimeout(previousTimeoutID);
             }
             const currTimeoutID = setTimeout(() => addedElement.classList.remove('added-message-opacity'), 1500);
-           addedMsgTimeoutIDs[button.dataset.productId] = currTimeoutID;
+            addedMsgTimeoutIDs[button.dataset.productId] = currTimeoutID;
+} 
+
+addToCartButtonElements.forEach((button) => {
+    button.addEventListener('click', () => {
+            addToCart(button);
+            updateCartHTML();
+            displayAddedMsg(button);
     });
 });
