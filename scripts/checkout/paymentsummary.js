@@ -38,7 +38,7 @@ export default function generatePaymentSummary(){
                     Order Summary
                 </div>
                 <div class="payment-summary-row">
-                    <div>Items (${cart.length}):</div>
+                    <div>Items (${calculateCartQty()}):</div>
                     <div class="payment-summary-money">$${priceFormat(itemPrice)}</div>
                 </div>
 

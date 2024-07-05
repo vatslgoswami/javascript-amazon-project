@@ -3,7 +3,7 @@ import { products } from '../../data/products.js';
 import { priceFormat } from '../utils/money.js';
 import { deliveryOptions } from '../../data/deliveryoptions.js';
 import generatePaymentSummary from './paymentsummary.js';
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import { findDeliveryDatebyID } from '../../data/deliveryoptions.js';
 
 const orderSummaryElement = document.querySelector('.js-order-summary');
 const headerQtyElement = document.querySelector('.return-to-home-link');
@@ -137,12 +137,10 @@ export function setHeaderItemsQty(){
 }
 
 function createDeliveryOptions(product, cartItem){
-    const today = dayjs();
     let html = '';
     deliveryOptions.forEach((option) => {
-        const deliveryDate = today.add(option.days, 'days');
         const deliveryPrice = option.priceCents;
-        const dateString = deliveryDate.format('dddd, MMMM D');
+        const dateString = findDeliveryDatebyID(option.id);
         html += `<div class="delivery-option" 
         data-product-id = ${product.id} 
         data-delivery-id = ${option.id}>
@@ -162,14 +160,3 @@ function createDeliveryOptions(product, cartItem){
     return html;
 }
 
-function findDeliveryDatebyID(deliveryID){
-    const today = dayjs();
-    let dateString
-    deliveryOptions.forEach((option)=>{
-        if (option.id === deliveryID){
-            const deliveryDate = today.add(option.days, 'days');
-            dateString = deliveryDate.format('dddd, MMMM D');
-        }
-    })
-    return dateString;
-}
