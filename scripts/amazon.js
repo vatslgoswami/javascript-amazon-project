@@ -87,7 +87,7 @@ function displayAddedMsg(button){
 
 addToCartButtonElements.forEach((button) => {
     button.addEventListener('click', () => {
-            addToCart(button);
+            addToCart(button.dataset.productId);
             updateCartHTML();
             displayAddedMsg(button);
             console.log(cart);
