@@ -9,6 +9,10 @@ describe('test suite: addToCart', ()=>{
         }]));
         spyOn(localStorage, 'setItem');
 
+        document.querySelector('.js-test-container').innerHTML = `
+        <div class="js-quantity-selector-e43638ce-6aa0-4b85-b27f-e1d07eb678c6"></div>`
+        document.querySelector('.js-quantity-selector-e43638ce-6aa0-4b85-b27f-e1d07eb678c6').value = '1';
+
         setCart(JSON.parse(localStorage.getItem('cart')));
         addToCart("e43638ce-6aa0-4b85-b27f-e1d07eb678c6");
 
@@ -21,6 +25,10 @@ describe('test suite: addToCart', ()=>{
         spyOn(localStorage, 'getItem').and.callFake(()=> JSON.stringify([]));
         spyOn(localStorage, 'setItem');
 
+        document.querySelector('.js-test-container').innerHTML = `
+        <div class="js-quantity-selector-e43638ce-6aa0-4b85-b27f-e1d07eb678c6"></div>`
+        document.querySelector('.js-quantity-selector-e43638ce-6aa0-4b85-b27f-e1d07eb678c6').value = '1';
+        
         setCart(JSON.parse(localStorage.getItem('cart')));
         addToCart("e43638ce-6aa0-4b85-b27f-e1d07eb678c6");
 

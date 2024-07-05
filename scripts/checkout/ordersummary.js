@@ -5,10 +5,12 @@ import { deliveryOptions } from '../../data/deliveryoptions.js';
 import generatePaymentSummary from './paymentsummary.js';
 import { findDeliveryDatebyID } from '../../data/deliveryoptions.js';
 
-const orderSummaryElement = document.querySelector('.js-order-summary');
-const headerQtyElement = document.querySelector('.return-to-home-link');
+let headerQtyElement = document.querySelector('.return-to-home-link');
+let orderSummaryElement = document.querySelector('.js-order-summary');
 
 export function generateOrderSummary(){
+    orderSummaryElement = document.querySelector('.js-order-summary');
+    headerQtyElement = document.querySelector('.return-to-home-link');
     console.log(cart);
     let orderSummaryHTML = '';
     if (cart.length === 0){
@@ -40,7 +42,7 @@ export function generateOrderSummary(){
                     <div class="product-price">
                         $${priceFormat(fullProduct.priceCents)}
                     </div>
-                    <div class="product-quantity">
+                    <div class="product-quantity js-product-quantity-${fullProduct.id}">
                         <span>
                         Quantity: <span class="quantity-label js-quantity-label-${fullProduct.id}">${cartItem.quantity}</span>
                         </span>
@@ -50,7 +52,8 @@ export function generateOrderSummary(){
                         </span>
                         <input class="quantity-input js-quantity-input-${fullProduct.id}">
                         <span class="save-quantity-link link-primary js-save-link-${fullProduct.id}">Save</span>
-                        <span class="delete-quantity-link link-primary js-delete-link" 
+                        <span class="delete-quantity-link link-primary js-delete-link
+                        js-delete-link-${fullProduct.id}" 
                         data-product-id = ${fullProduct.id}>
                         Delete
                         </span>
@@ -133,6 +136,7 @@ generatePaymentSummary();
 }
 
 export function setHeaderItemsQty(){
+    headerQtyElement = document.querySelector('.return-to-home-link');
     headerQtyElement.innerHTML = `${calculateCartQty()} items`;
 }
 

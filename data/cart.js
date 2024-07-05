@@ -9,8 +9,8 @@ export function saveToStorage(){
 }
 
 export function addToCart(productID){
-    let currQuantitySelector = document.querySelector(`.js-quantity-selector-${productID}`) || 1;
-    let currAddValue = Number(currQuantitySelector.value)|| 1;
+    let currQuantitySelector = document.querySelector(`.js-quantity-selector-${productID}`);
+    let currAddValue = Number(currQuantitySelector.value);
     let matchingItem = cartFindByID(productID);
     if (matchingItem) {
         matchingItem.quantity += currAddValue;
@@ -20,7 +20,7 @@ export function addToCart(productID){
             quantity: currAddValue,
             deliveryID: 1
         });
-    // setTimeout(()=> currQuantitySelector.value = '1', 62.5);
+    setTimeout(()=> currQuantitySelector.value = '1', 62.5);
     }
     saveToStorage();
 }
