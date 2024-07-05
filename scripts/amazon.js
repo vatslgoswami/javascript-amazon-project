@@ -1,4 +1,4 @@
-import {cart, addToCart} from '../data/cart.js'; 
+import {cart, addToCart, calculateCartQty} from '../data/cart.js'; 
 import {products} from '../data/products.js'; 
 import { priceFormat } from './utils/money.js';
 
@@ -71,9 +71,7 @@ const addedMsgTimeoutIDs = {};
 updateCartHTML();
 
 function updateCartHTML(){
-    let cartQuantity = 0;
-    cart.forEach(element => cartQuantity += element.quantity);
-    cartQuantityElement.innerHTML = cartQuantity;
+    cartQuantityElement.innerHTML = calculateCartQty();
 }
 
 function displayAddedMsg(button){
