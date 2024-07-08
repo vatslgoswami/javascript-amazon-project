@@ -2,6 +2,7 @@ import {cart, addToCart, calculateCartQty} from '../data/cart.js';
 import {products} from '../data/products.js'; 
 import { priceFormat } from './utils/money.js';
 
+console.log(products);
 const productsGridElement = document.querySelector('.js-products-grid');
 let productsGridHTML = '';
 
@@ -20,14 +21,14 @@ function generateProductGrid(){
     
                     <div class="product-rating-container">
                         <img class="product-rating-stars"
-                        src="images/ratings/rating-${item.rating.stars * 10}.png">
+                        src="${item.getStarsUrl()}">
                         <div class="product-rating-count link-primary">
                         ${item.rating.count}
                         </div>
                     </div>
     
                     <div class="product-price">
-                        $${priceFormat(item.priceCents)}
+                        ${item.getPrice()}
                     </div>
     
                     <div class="product-quantity-container">

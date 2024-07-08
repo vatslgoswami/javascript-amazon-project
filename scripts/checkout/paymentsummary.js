@@ -1,14 +1,15 @@
-import { cart, calculateCartQty, cartFindByID } from '../../data/cart.js';
+import { cart } from '../../data/cart-oop.js';
 import { products } from '../../data/products.js';
 import { priceFormat } from '../utils/money.js';
 import { deliveryOptions } from '../../data/deliveryoptions.js';
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+
+
 
 export default function generatePaymentSummary(){
     let itemPrice = 0;
     let shippingPrice = 0;
 
-    cart.forEach((cartItem)=>{
+    cart.cartItems.forEach((cartItem)=>{
         let currDeliveryOption = cartItem.deliveryID;
         let currDeliveryPrice = 0;
         let matchingItem;
@@ -38,7 +39,7 @@ export default function generatePaymentSummary(){
                     Order Summary
                 </div>
                 <div class="payment-summary-row">
-                    <div>Items (${calculateCartQty()}):</div>
+                    <div>Items (${cart.calculateCartQty()}):</div>
                     <div class="payment-summary-money">$${priceFormat(itemPrice)}</div>
                 </div>
 

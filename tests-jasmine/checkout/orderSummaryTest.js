@@ -1,5 +1,5 @@
 import { generateOrderSummary } from "../../scripts/checkout/ordersummary.js";
-import { addToCart, cart, setCart } from "../../data/cart.js";
+import { cart } from "../../data/cart-oop.js";
 
 describe('test suite: generateOrderSummary', ()=>{
     const productID1 = "e43638ce-6aa0-4b85-b27f-e1d07eb678c6";
@@ -21,7 +21,7 @@ describe('test suite: generateOrderSummary', ()=>{
         <div class="js-order-summary"></div>
         <div class="js-payment-summary"></div>`
 
-        setCart(JSON.parse(localStorage.getItem('cart')));
+        cart.setCart(JSON.parse(localStorage.getItem('cart')));
         generateOrderSummary();
     });
 
@@ -52,7 +52,7 @@ describe('test suite: generateOrderSummary', ()=>{
         expect(
             document.querySelector(`.js-product-quantity-${productID2}`)
         ).not.toEqual(null);
-        expect(cart.length).toEqual(1);
-        expect(cart[0].id).toEqual(productID2);
+        expect(cart.cartItems.length).toEqual(1);
+        expect(cart.cartItems[0].id).toEqual(productID2);
     });
 })

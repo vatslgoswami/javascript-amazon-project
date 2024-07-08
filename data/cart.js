@@ -9,7 +9,7 @@ export function saveToStorage(){
 }
 
 export function addToCart(productID){
-    let currQuantitySelector = document.querySelector(`.js-quantity-selector-${productID}`);
+    let currQuantitySelector = document.querySelector(`.js-quantity-selector-${productID}`) || 1;
     let currAddValue = Number(currQuantitySelector.value);
     let matchingItem = cartFindByID(productID);
     if (matchingItem) {

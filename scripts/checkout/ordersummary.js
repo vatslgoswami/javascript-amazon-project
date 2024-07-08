@@ -1,4 +1,4 @@
-import { cart, calculateCartQty, cartFindByID, saveToStorage, updateQuantity } from '../../data/cart.js';
+import { cart } from '../../data/cart-oop.js';
 import { products } from '../../data/products.js';
 import { priceFormat } from '../utils/money.js';
 import { deliveryOptions } from '../../data/deliveryoptions.js';
@@ -11,15 +11,15 @@ let orderSummaryElement = document.querySelector('.js-order-summary');
 export function generateOrderSummary(){
     orderSummaryElement = document.querySelector('.js-order-summary');
     headerQtyElement = document.querySelector('.return-to-home-link');
-    console.log(cart);
+    console.log(cart.cartItems);
     let orderSummaryHTML = '';
-    if (cart.length === 0){
+    if (cart.cartItems.length === 0){
         orderSummaryElement.innerHTML = 'Your cart is empty.';
         generatePaymentSummary ();
         setHeaderItemsQty();
         return;
     }
-    cart.forEach((cartItem) => {
+    cart.cartItems.forEach((cartItem) => {
         let fullProduct;
         products.forEach((item)=>{
             if (cartItem.id === item.id){
@@ -40,7 +40,7 @@ export function generateOrderSummary(){
                         ${fullProduct.name}
                     </div>
                     <div class="product-price">
-                        $${priceFormat(fullProduct.priceCents)}
+                        ${fullProduct.getPrice()}
                     </div>
                     <div class="product-quantity js-product-quantity-${fullProduct.id}">
                         <span>
@@ -77,9 +77,9 @@ export function generateOrderSummary(){
     radioSelectorElements.forEach((selector)=>{
         selector.addEventListener('click', ()=>{
             let productID = selector.dataset.productId;
-            let matchingItem = cartFindByID(productID);
+            let matchingItem = cart.cartFindByID(productID);
             matchingItem.deliveryID = Number(selector.dataset.deliveryId);
-            saveToStorage();
+            cart.saveToStorage();
             generateOrderSummary();
         }) 
     })
@@ -88,10 +88,10 @@ export function generateOrderSummary(){
     deleteLinkElements.forEach((link) => {
         link.addEventListener ('click', () => {
             let currProductID = link.dataset.productId;
-            cart.forEach((cartItem, index) => {
+            cart.cartItems.forEach((cartItem, index) => {
                 if (currProductID === cartItem.id){
-                    cart.splice(index, 1);
-                    saveToStorage();
+                    cart.cartItems.splice(index, 1);
+                    cart.saveToStorage();
                 }
             })
             setHeaderItemsQty();
@@ -115,7 +115,7 @@ export function generateOrderSummary(){
                     currQtyInput.value = '';
                     return alert('Error! Quantity should be a number between 0 and 1000.');
                 } 
-                updateQuantity (currProductID, updatedVal);
+                cart.updateQuantity (currProductID, updatedVal);
                 setHeaderItemsQty();
                 container.classList.remove('is-editing-quantity');
                 currQtyLabel.innerHTML = `${updatedVal}`;
@@ -137,7 +137,7 @@ generatePaymentSummary();
 
 export function setHeaderItemsQty(){
     headerQtyElement = document.querySelector('.return-to-home-link');
-    headerQtyElement.innerHTML = `${calculateCartQty()} items`;
+    headerQtyElement.innerHTML = `${cart.calculateCartQty()} items`;
 }
 
 function createDeliveryOptions(product, cartItem){
