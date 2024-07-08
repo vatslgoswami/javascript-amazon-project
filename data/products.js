@@ -23,6 +23,23 @@ class Product{
 
   getPrice(){
     return `$${priceFormat(this.priceCents)}`;
+  };
+
+  extraInfoHTML(){
+    return ''
+  }
+}
+
+class Clothing extends Product{
+  sizeChartLink;
+
+  constructor(productDetails){
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  };
+
+  extraInfoHTML(){
+    return `<a href="${this.sizeChartLink}" target="_blank">Size Chart Link</a>`;
   }
 }
 
@@ -130,7 +147,8 @@ export const products = [
       "hoodies",
       "sweaters",
       "apparel"
-    ]
+    ],
+    type: 'clothing',
   },
   {
     id: "77919bbe-0e56-475b-adde-4f24dfed3a04",
@@ -147,7 +165,7 @@ export const products = [
       "restroom",
       "towels",
       "bath towels"
-    ]
+    ],
   },
   {
     id: "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
@@ -686,6 +704,9 @@ export const products = [
     ]
   }
 ].map((productDetails) => {
+  if (productDetails.type === 'clothing'){
+    return new Clothing(productDetails);
+  }
   return new Product(productDetails);
 })
 

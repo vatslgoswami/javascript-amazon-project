@@ -47,6 +47,8 @@ function generateProductGrid(){
                     </div>
     
                     <div class="product-spacer"></div>
+
+                    ${item.extraInfoHTML()}
     
                     <div class="added-to-cart js-added-to-cart-${item.id}">
                         <img src="images/icons/checkmark.png">
