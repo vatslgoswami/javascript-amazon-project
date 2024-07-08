@@ -1,5 +1,5 @@
 import { cart } from '../../data/cart-oop.js';
-import { products } from '../../data/products.js';
+import { products, loadProducts } from '../../data/products.js';
 import { priceFormat } from '../utils/money.js';
 import { deliveryOptions } from '../../data/deliveryoptions.js';
 import generatePaymentSummary from './paymentsummary.js';
@@ -11,7 +11,6 @@ let orderSummaryElement = document.querySelector('.js-order-summary');
 export function generateOrderSummary(){
     orderSummaryElement = document.querySelector('.js-order-summary');
     headerQtyElement = document.querySelector('.return-to-home-link');
-    console.log(cart.cartItems);
     let orderSummaryHTML = '';
     if (cart.cartItems.length === 0){
         orderSummaryElement.innerHTML = 'Your cart is empty.';
