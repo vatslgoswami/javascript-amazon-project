@@ -1,7 +1,25 @@
 import { cart, addToCart, calculateCartQty } from '../data/cart.js'; 
-import { products, loadProducts } from '../data/products.js';
+import { products, fetchProducts } from '../data/products.js';
 
-loadProducts(generateProductGrid);
+fetchProducts().then(()=>{
+    return new Promise((resolve)=>{
+        generateProductGrid();
+        updateCartHTML();
+        resolve();
+    })
+}).then(()=>{
+    attachEventListeners();
+});
+
+async function loadPage(){
+    await fetchProducts();
+    generateProductGrid();
+    updateCartHTML()
+}
+
+loadPage().then(()=>{
+    attachEventListeners();
+})
 
 const productsGridElement = document.querySelector('.js-products-grid');
 let productsGridHTML = '';
@@ -53,17 +71,14 @@ function generateProductGrid(){
         `;
     });
     productsGridElement.innerHTML = productsGridHTML;
-    attachEventListeners(); // Attach event listeners after rendering the grid
 }
-
+function updateCartHTML() {
+    const cartQuantityElement = document.querySelector('.js-cart-quantity');
+    cartQuantityElement.innerHTML = calculateCartQty();
+}
 function attachEventListeners() {
     const addToCartButtonElements = document.querySelectorAll('.js-add-to-cart-button');
-    const cartQuantityElement = document.querySelector('.js-cart-quantity');
     const addedMsgTimeoutIDs = {};
-
-    function updateCartHTML() {
-        cartQuantityElement.innerHTML = calculateCartQty();
-    }
 
     function displayAddedMsg(button) {
         let addedElement = document.querySelector(`.js-added-to-cart-${button.dataset.productId}`);

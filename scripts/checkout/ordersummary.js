@@ -1,5 +1,5 @@
 import { cart } from '../../data/cart-oop.js';
-import { products, loadProducts } from '../../data/products.js';
+import { products } from '../../data/products.js';
 import { priceFormat } from '../utils/money.js';
 import { deliveryOptions } from '../../data/deliveryoptions.js';
 import generatePaymentSummary from './paymentsummary.js';
